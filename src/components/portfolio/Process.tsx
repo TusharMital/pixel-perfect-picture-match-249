@@ -39,14 +39,12 @@ export function Process() {
         </div>
 
         <div ref={ref} className="relative mt-20">
-          {/* track */}
-          <div className="absolute left-[11px] top-0 h-full w-px bg-border md:left-0 md:top-[11px] md:h-px md:w-full">
-            <div
-              className="h-full w-full origin-top bg-primary md:origin-left"
-              style={{ transform: `var(--tw-scale, scale(1, ${progress}))` }}
-            />
+          <div aria-hidden className="absolute left-[11px] top-0 h-full w-px bg-border md:hidden">
+            <div className="h-full w-full origin-top bg-primary" style={{ transform: `scaleY(${progress})` }} />
           </div>
-          <style>{`@media (min-width: 768px){#process [data-track]{}}`}</style>
+          <div aria-hidden className="absolute left-0 top-[11px] hidden h-px w-full bg-border md:block">
+            <div className="h-full w-full origin-left bg-primary" style={{ transform: `scaleX(${progress})` }} />
+          </div>
           <ol className="relative grid gap-10 md:grid-cols-6 md:gap-6">
             {PROCESS.map((s, i) => {
               const on = i <= activeIdx;
