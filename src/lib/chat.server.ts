@@ -18,7 +18,7 @@ const BodySchema = z.object({
 const RUN_ID = "X-Lovable-AIG-Run-ID";
 
 export async function handleChat(request: Request): Promise<Response> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) {
     return Response.json({ error: "The assistant is not configured yet.", code: "unconfigured" }, { status: 503 });
   }
@@ -43,7 +43,7 @@ export async function handleChat(request: Request): Promise<Response> {
     baseURL: "https://ai.gateway.lovable.dev/v1",
     apiKey,
     headers: { "Lovable-API-Key": apiKey, "X-Lovable-AIG-SDK": "vercel-ai-sdk" },
-    fetch: async (input, init) => {
+    fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
       const headers = new Headers(init?.headers);
       if (runId && !headers.has(RUN_ID)) headers.set(RUN_ID, runId);
       const res = await fetch(input, { ...init, headers });
