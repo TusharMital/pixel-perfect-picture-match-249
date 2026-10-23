@@ -65,7 +65,7 @@ export function ParticleField() {
       mouse.ty = e.clientY - rect.top;
     };
     const io = new IntersectionObserver(([e]) => {
-      running = e.isIntersecting;
+      running = !!e?.isIntersecting;
       cancelAnimationFrame(raf);
       if (running) draw();
     });
