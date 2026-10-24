@@ -1,26 +1,19 @@
-# Pixel Perfect Picture Match
+# Tushar Mittal — Portfolio
 
-Implement exactly the screenshot and nothing else
+Built with TanStack Start, Tailwind v4 and Lovable Cloud.
 
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://pixel-perfect-picture-match-249.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/eb689635-43a9-42b1-b5e0-daf510eac55e).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+## Develop
+```bash
+bun install
+bun run dev      # http://localhost:8080
+bunx vitest run  # project search/filter tests
 ```
+
+## AI assistant ("Ask Tushar's Portfolio")
+Server route: `POST /api/chat`. It needs the server-only env var `LOVABLE_API_KEY`
+(provisioned automatically on Lovable). Without it the chat shows a "not configured" error.
+Never expose it as a `VITE_*` variable or commit it.
+
+## Deploy
+Publish from Lovable. For other hosts (e.g. Vercel), set `LOVABLE_API_KEY` in the host's environment variables.
+Edit portfolio content in `src/lib/portfolio-data.ts`.
