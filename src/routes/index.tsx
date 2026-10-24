@@ -7,18 +7,19 @@ import { Work } from "@/components/portfolio/Work";
 import { Process } from "@/components/portfolio/Process";
 import { Skills, Milestones } from "@/components/portfolio/Skills";
 import { Contact } from "@/components/portfolio/Contact";
+import { AssistantSection } from "@/components/portfolio/AssistantSection";
 import { ChatAssistant } from "@/components/portfolio/ChatAssistant";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Tushar Mittal — CS Undergraduate & AI-Assisted Developer" },
+      { title: "Tushar Mittal — Computer Science Undergraduate" },
       {
         name: "description",
         content:
           "Portfolio of Tushar Mittal, CS undergraduate at JECRC University: Prompt Engineering coursework projects, process, skills and systems interests.",
       },
-      { property: "og:title", content: "Tushar Mittal — CS Undergraduate & AI-Assisted Developer" },
+      { property: "og:title", content: "Tushar Mittal — Computer Science Undergraduate" },
       {
         property: "og:description",
         content: "Coursework projects, AI-assisted development process and computer science interests of Tushar Mittal.",
@@ -41,10 +42,11 @@ function Index() {
       <main id="main">
         <Hero />
         <About />
+        <Skills />
         <Work />
         <Process />
-        <Skills />
         <Milestones />
+        <AssistantSection onOpenChat={() => setChatOpen(true)} />
         <Contact />
       </main>
       <ChatAssistant open={chatOpen} onOpenChange={setChatOpen} />

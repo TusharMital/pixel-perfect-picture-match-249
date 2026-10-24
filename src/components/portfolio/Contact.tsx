@@ -1,17 +1,20 @@
 import { ArrowUpRight, Copy, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { LINKS } from "@/lib/portfolio-data";
 import { Reveal, SectionLabel } from "./Reveal";
 
 export function Contact() {
+  const [copyError, setCopyError] = useState(false);
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
+      setCopyError(false);
       await navigator.clipboard.writeText(LINKS.email);
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      /* clipboard unavailable */
+      setCopyError(true);
     }
   };
   return (
@@ -21,7 +24,7 @@ export function Contact() {
         <Reveal>
           <SectionLabel n="06">Contact</SectionLabel>
         </Reveal>
-        <Reveal as="h2" className="display mt-10 text-[15vw] md:text-[10vw] xl:text-[9rem]">
+        <Reveal as="h2" className="display mt-10 text-5xl md:text-7xl lg:text-8xl">
           Curious about what
           <br />
           we can <em className="text-primary">build?</em>
@@ -35,18 +38,19 @@ export function Contact() {
             <Reveal className="flex flex-wrap items-center gap-3">
               <a
                 href={`mailto:${LINKS.email}`}
-                className="display link-underline text-3xl md:text-5xl"
+                className="display link-underline break-all text-2xl lg:text-4xl"
               >
                 {LINKS.email}
               </a>
-              <button
+              <Button variant="ghost" size="icon"
                 onClick={copy}
                 aria-label="Copy email address"
                 className="grid h-10 w-10 place-items-center rounded-full border border-border hover:border-foreground"
               >
                 {copied ? <Check className="h-4 w-4 text-signal" /> : <Copy className="h-4 w-4" />}
-              </button>
+              </Button>
             </Reveal>
+            <p role="status" className="mt-2 text-sm text-muted-foreground">{copied ? "Email copied." : copyError ? "Copy unavailable — use the email link." : ""}</p>
             <Reveal delay={100} className="mt-10 grid border-t border-border">
               {[
                 ["GitHub", LINKS.github, "github.com/TusharMital"],

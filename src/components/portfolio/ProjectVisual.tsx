@@ -20,8 +20,8 @@ export function ProjectVisual({ id }: { id: string }) {
   if (id === "quiz-app") {
     return (
       <div className="grid-lines flex h-full flex-col justify-center gap-3 p-8">
-        <div className="label-mono text-muted-foreground">Q 03 / 10 · Score 2</div>
-        <div className="display mb-2 text-3xl">What is O(log n)?</div>
+        <div className="label-mono text-muted-foreground">Q 03 / 05</div>
+        <div className="display mb-2 text-3xl">What makes a useful test?</div>
         {["A", "B", "C", "D"].map((l, i) => (
           <div
             key={l}
@@ -34,28 +34,16 @@ export function ProjectVisual({ id }: { id: string }) {
       </div>
     );
   }
-  if (id === "debugging") {
-    return (
-      <div className="flex h-full flex-col bg-surface p-6 font-mono text-[12px] leading-6">
-        <div className="mb-3 flex gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" />
-          <span className="h-2.5 w-2.5 rounded-full bg-signal/70" />
-        </div>
-        <div className="text-muted-foreground">$ python test_student_utils.py</div>
-        <div className="text-destructive">− return sum(marks) / (len(marks) - 1)</div>
-        <div className="text-signal">+ return sum(marks) / len(marks)</div>
-        <div className="text-destructive">− return mark &gt; 40</div>
-        <div className="text-signal">+ return mark &gt;= 40</div>
-        <div className="mt-auto flex items-center gap-3 pt-4">
-          <span className="rounded bg-destructive/15 px-2 text-destructive">RED</span>
-          <span className="text-muted-foreground">→ FIX →</span>
-          <span className="rounded bg-signal/15 px-2 text-signal">GREEN</span>
-          <span className="caret ml-1">▍</span>
-        </div>
-        <div className="label-mono mt-3 text-muted-foreground/70">illustrative excerpt</div>
+  if (id === "debugging" || id === "cursor-debugging") {
+    const cursor = id === "cursor-debugging";
+    return <div className="grid-lines flex h-full flex-col justify-center gap-6 p-6 md:p-8">
+      <p className="label-mono text-primary">{cursor ? "Running total" : "Boundary checks"}</p>
+      <p className="display text-4xl">{cursor ? "10 + 20 + 30 + 40 + 50" : "Reproduce. Correct. Verify."}</p>
+      <div className="border-t border-border pt-6">
+        <p className="display text-6xl text-primary">{cursor ? "150" : "RED → GREEN"}</p>
+        <p className="mt-4 text-sm text-muted-foreground">{cursor ? "Accumulate values, don’t overwrite the total." : "Average · pass boundary · grade ordering"}</p>
       </div>
-    );
+    </div>;
   }
   const books = [
     { h: 78, s: "Finished" },
