@@ -1,5 +1,7 @@
+import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 import { useMemo, useState } from "react";
-import { ArrowUpRight, Github, Plus, Search, X } from "lucide-react";
+import { ArrowUpRight, Github, Search, X } from "lucide-react";
 import { CATEGORIES, PROJECTS, type Category } from "@/lib/portfolio-data";
 import { filterProjects } from "@/lib/project-filter";
 import { ProjectVisual } from "./ProjectVisual";
@@ -8,7 +10,6 @@ import { Reveal, SectionLabel } from "./Reveal";
 export function Work() {
   const [query, setQuery] = useState("");
   const [cat, setCat] = useState<Category | null>(null);
-  const [openId, setOpenId] = useState<string | null>(null);
   const results = useMemo(() => filterProjects(PROJECTS, query, cat), [query, cat]);
   const filtered = query.trim() !== "" || cat !== null;
 
@@ -16,11 +17,11 @@ export function Work() {
     <section id="work" className="relative border-t border-hairline">
       <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 md:py-36">
         <Reveal>
-          <SectionLabel n="02">Selected coursework</SectionLabel>
+          <SectionLabel n="03">Projects</SectionLabel>
         </Reveal>
         <div className="mt-10 flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
-          <Reveal as="h2" className="display text-6xl md:text-8xl lg:text-9xl">
-            Work<span className="text-primary">.</span>
+          <Reveal as="h2" className="display text-6xl md:text-8xl">
+            Projects<span className="text-primary">.</span>
           </Reveal>
 
           <Reveal delay={100} className="w-full lg:max-w-xl">
@@ -36,17 +37,17 @@ export function Work() {
             </label>
             <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by category">
               {CATEGORIES.map((c) => (
-                <button
+                <Button variant="ghost"
                   key={c}
                   aria-pressed={cat === c}
                   onClick={() => setCat(cat === c ? null : c)}
                   className={`label-mono rounded-full border px-3 py-1.5 transition-colors ${cat === c ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:text-foreground"}`}
                 >
                   {c}
-                </button>
+                </Button>
               ))}
               {filtered && (
-                <button
+                <Button variant="ghost"
                   onClick={() => {
                     setQuery("");
                     setCat(null);
@@ -54,7 +55,7 @@ export function Work() {
                   className="label-mono ml-1 flex items-center gap-1 text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-3 w-3" /> Clear
-                </button>
+                </Button>
               )}
             </div>
             <p className="label-mono mt-4 text-muted-foreground" aria-live="polite">
@@ -72,7 +73,7 @@ export function Work() {
           )}
           {results.map((p, i) => {
             const flip = i % 2 === 1;
-            const open = openId === p.id;
+            
             return (
               <article key={p.id} className="group grid gap-10 md:grid-cols-12 md:gap-12">
                 <Reveal
@@ -100,55 +101,29 @@ export function Work() {
                     ))}
                   </Reveal>
                   <Reveal delay={280} className="mt-8 flex flex-wrap gap-3">
-                    <a
+                    {p.repo && <Button asChild variant="outline" className="h-auto"><a
                       href={p.repo}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:border-foreground"
                     >
                       <Github className="h-4 w-4" /> View Source
-                    </a>
+                    </a></Button>}
                     {p.live && (
-                      <a
+                      <Button asChild className="h-auto"><a
                         href={p.live}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-primary hover:text-primary-foreground"
                       >
                         Launch Project <ArrowUpRight className="h-4 w-4" />
-                      </a>
+                      </a></Button>
                     )}
                   </Reveal>
 
-                  <div className="mt-8 border-t border-hairline">
-                    <button
-                      onClick={() => setOpenId(open ? null : p.id)}
-                      aria-expanded={open}
-                      aria-controls={`cs-${p.id}`}
-                      className="label-mono flex w-full items-center justify-between py-4 text-muted-foreground hover:text-foreground"
-                    >
-                      Case study
-                      <Plus className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-45" : ""}`} />
-                    </button>
-                    <div
-                      id={`cs-${p.id}`}
-                      className={`grid transition-all duration-500 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-                    >
-                      <dl className="space-y-4 overflow-hidden">
-                        {(
-                          [
-                            ["Objective", p.caseStudy.objective],
-                            ["Implementation", p.caseStudy.implementation],
-                            ["Outcome", p.caseStudy.outcome],
-                          ] as const
-                        ).map(([k, v]) => (
-                          <div key={k} className="grid grid-cols-[110px_1fr] gap-4 pb-1">
-                            <dt className="label-mono pt-1 text-signal">{k}</dt>
-                            <dd className="leading-relaxed">{v}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </div>
+                  <div className="mt-8 border-t border-hairline pt-4">
+                    <p className="label-mono mb-3 text-muted-foreground">{p.repo ? "Learning project · source available" : "Learning example · no public source"}</p>
+                    <Button asChild variant="link" className="px-0"><Link to="/projects/$projectId" params={{ projectId: p.id }}>Read case study <ArrowUpRight /></Link></Button>
                   </div>
                 </div>
               </article>

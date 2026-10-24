@@ -1,4 +1,4 @@
-import { MILESTONES, SKILLS } from "@/lib/portfolio-data";
+import { COURSE, MILESTONES, SKILLS } from "@/lib/portfolio-data";
 import { Reveal, SectionLabel } from "./Reveal";
 
 export function Skills() {
@@ -6,7 +6,7 @@ export function Skills() {
     <section id="skills" className="border-t border-hairline">
       <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 md:py-36">
         <Reveal>
-          <SectionLabel n="04">Toolkit</SectionLabel>
+          <SectionLabel n="02">Skills & current learning</SectionLabel>
         </Reveal>
         <Reveal as="h2" className="display mt-10 text-5xl md:text-7xl">
           What I work with <span className="text-muted-foreground">— and keep learning.</span>
@@ -35,18 +35,18 @@ export function Skills() {
 
 export function Milestones() {
   return (
-    <section id="milestones" className="border-t border-hairline bg-card">
+    <section id="journey" className="border-t border-hairline bg-card">
       <div className="mx-auto grid max-w-[1400px] gap-14 px-5 py-28 md:grid-cols-12 md:px-10 md:py-36">
         <div className="md:col-span-4">
           <div className="md:sticky md:top-28">
             <Reveal>
-              <SectionLabel n="05">Academic milestones</SectionLabel>
+              <SectionLabel n="05">Learning Journey</SectionLabel>
             </Reveal>
             <Reveal as="h2" className="display mt-10 text-5xl md:text-6xl">
-              Beyond the coursework.
+              Building the foundations.
             </Reveal>
             <Reveal delay={100} className="mt-5 text-muted-foreground">
-              Separate from the projects above — the self-directed study shaping where I’m heading.
+              Programming, systems and emerging technologies — subjects I am studying, not claims of mastery.
             </Reveal>
           </div>
         </div>
@@ -63,6 +63,13 @@ export function Milestones() {
             </Reveal>
           ))}
         </ol>
+      </div>
+      <div className="mx-auto max-w-[1400px] border-t border-border px-5 py-16 md:px-10">
+        <p className="label-mono text-primary">Education & Certification</p>
+        <h3 className="display mt-6 max-w-4xl text-4xl md:text-5xl">{COURSE.title}</h3>
+        <dl className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[["Duration", `${COURSE.hours} hours`], ["Funding", COURSE.funding], ["Host", COURSE.host], ["Reported rating", COURSE.rating]].map(([label, value]) => <div key={label}><dt className="label-mono text-muted-foreground">{label}</dt><dd className="mt-2 leading-relaxed">{value}</dd></div>)}
+        </dl>
       </div>
     </section>
   );

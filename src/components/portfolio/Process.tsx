@@ -26,7 +26,7 @@ export function Process() {
     <section id="process" className="relative overflow-hidden border-t border-hairline bg-card">
       <div className="mx-auto max-w-[1400px] px-5 py-28 md:px-10 md:py-36">
         <Reveal>
-          <SectionLabel n="03">Process</SectionLabel>
+          <SectionLabel n="04">Prompt Engineering</SectionLabel>
         </Reveal>
         <div className="mt-10 grid gap-8 md:grid-cols-12">
           <Reveal as="h2" className="display text-5xl md:col-span-8 md:text-7xl lg:text-8xl">
@@ -45,7 +45,7 @@ export function Process() {
           <div aria-hidden className="absolute left-0 top-[11px] hidden h-px w-full bg-border md:block">
             <div className="h-full w-full origin-left bg-primary" style={{ transform: `scaleX(${progress})` }} />
           </div>
-          <ol className="relative grid gap-10 md:grid-cols-6 md:gap-6">
+          <ol className="relative grid gap-10 md:grid-cols-5 md:gap-6">
             {PROCESS.map((s, i) => {
               const on = i <= activeIdx;
               return (
@@ -55,10 +55,11 @@ export function Process() {
                   >
                     <span className={`h-1.5 w-1.5 rounded-full ${on ? "bg-primary-foreground" : "bg-muted-foreground/50"}`} />
                   </span>
-                  <div className={`transition-all duration-700 ${on ? "opacity-100" : "opacity-35"}`}>
+                  <div className={`transition-all duration-700 ${on ? "opacity-100" : "opacity-100"}`}>
                     <div className="label-mono text-muted-foreground">Step {String(i + 1).padStart(2, "0")}</div>
                     <h3 className="display mt-2 text-3xl md:text-4xl">{s.k}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
+                    <p className="mt-4 text-sm leading-relaxed">{s.example}</p>
                   </div>
                 </li>
               );
