@@ -1,19 +1,6 @@
 import { Reveal, SectionLabel } from "./Reveal";
 
-const INTERESTS = [
-  "Systems & low-level programming",
-  "Operating systems & computer architecture",
-  "Networking & protocols",
-  "Data structures & algorithms",
-  "Quantum computing",
-];
-const COURSEWORK = [
-  "Prompt design & refinement",
-  "AI-assisted coding",
-  "Debugging & testing",
-  "Code review & documentation",
-  "Building & deploying web apps",
-];
+import { PROFILE, INTERESTS, COURSEWORK } from "@/lib/portfolio-data";
 
 export function About() {
   return (
@@ -29,15 +16,13 @@ export function About() {
         </Reveal>
         <div className="space-y-6 text-lg leading-relaxed text-muted-foreground md:col-span-4 md:pt-4">
           <Reveal delay={100}>
-            I study C and C++, data structures and algorithms, operating systems, computer architecture, Linux environments,
-            networking and quantum computing.
+            {PROFILE.study}
           </Reveal>
           <Reveal delay={200}>
-            Alongside, my Prompt Engineering coursework explores how AI tools can help write programs, investigate errors,
-            test behaviour, document and deploy software.
+            {PROFILE.coursework}
           </Reveal>
           <Reveal delay={300} className="border-l-2 border-primary pl-5 text-foreground">
-            I treat AI as a development aid — not a substitute for understanding. Evaluate, inspect, test, iterate.
+            {PROFILE.approach}
           </Reveal>
         </div>
       </div>

@@ -50,22 +50,22 @@
   --popover: oklch(0.19 0.007 260);
   --popover-foreground: var(--foreground);
   --surface: oklch(0.2 0.008 260);
-  --primary: oklch(0.66 0.2 258);
-  --primary-foreground: oklch(0.985 0.005 85);
+  --primary: oklch(0.76 0.095 75);
+  --primary-foreground: oklch(0.18 0.008 75);
   --secondary: oklch(0.23 0.008 260);
   --secondary-foreground: var(--foreground);
   --muted: oklch(0.23 0.008 260);
   --muted-foreground: oklch(0.68 0.012 260);
-  --accent: oklch(0.66 0.2 258);
-  --accent-foreground: oklch(0.985 0.005 85);
-  --signal: oklch(0.88 0.19 128);
+  --accent: var(--primary);
+  --accent-foreground: var(--primary-foreground);
+  --signal: oklch(0.76 0.08 155);
   --signal-foreground: oklch(0.18 0.02 128);
   --destructive: oklch(0.65 0.2 25);
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(1 0 0 / 11%);
   --hairline: oklch(1 0 0 / 6%);
   --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.66 0.2 258);
+  --ring: var(--primary);
   --grain-opacity: 0.07;
   --particle: 0.955 0.012 85;
   color-scheme: dark;
@@ -77,17 +77,18 @@
   --card: oklch(0.985 0.005 85);
   --popover: oklch(0.985 0.005 85);
   --surface: oklch(0.93 0.01 85);
-  --primary: oklch(0.52 0.22 262);
+  --primary: oklch(0.44 0.085 65);
+  --primary-foreground: oklch(0.98 0.005 85);
   --secondary: oklch(0.92 0.01 85);
   --muted: oklch(0.92 0.01 85);
   --muted-foreground: oklch(0.45 0.012 260);
-  --accent: oklch(0.52 0.22 262);
+  --accent: var(--primary);
   --signal: oklch(0.55 0.16 135);
   --signal-foreground: oklch(0.98 0.01 128);
   --border: oklch(0.17 0.008 260 / 14%);
   --hairline: oklch(0.17 0.008 260 / 7%);
   --input: oklch(0.17 0.008 260 / 18%);
-  --ring: oklch(0.52 0.22 262);
+  --ring: var(--primary);
   --grain-opacity: 0.05;
   --particle: 0.17 0.008 260;
   color-scheme: light;
@@ -135,14 +136,14 @@
 @utility label-mono {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 @utility display {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 0.9;
 }
 
@@ -250,3 +251,9 @@
     transform: none;
   }
 }
+
+section[id] { scroll-margin-top: 88px; }
+.hero-name { font-size: 8rem; }
+@media (min-width: 768px) { .hero-name { font-size: 11rem; } }
+@media (min-width: 1280px) { .hero-name { font-size: 13rem; } }
+@media (max-width: 380px) { .hero-name { font-size: 6.5rem; } }
