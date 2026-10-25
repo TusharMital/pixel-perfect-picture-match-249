@@ -35,9 +35,14 @@ export function Work() {
                 className="w-full bg-transparent text-lg outline-none placeholder:text-muted-foreground"
               />
             </label>
-            <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by category">
+            <div
+              className="mt-4 flex flex-wrap items-center gap-2"
+              role="group"
+              aria-label="Filter by category"
+            >
               {CATEGORIES.map((c) => (
-                <Button variant="ghost"
+                <Button
+                  variant="ghost"
                   key={c}
                   aria-pressed={cat === c}
                   onClick={() => setCat(cat === c ? null : c)}
@@ -47,7 +52,8 @@ export function Work() {
                 </Button>
               ))}
               {filtered && (
-                <Button variant="ghost"
+                <Button
+                  variant="ghost"
                   onClick={() => {
                     setQuery("");
                     setCat(null);
@@ -68,12 +74,14 @@ export function Work() {
           {results.length === 0 && (
             <div className="rounded-lg border border-dashed border-border py-24 text-center">
               <p className="display text-4xl">Nothing matches that yet.</p>
-              <p className="mt-3 text-muted-foreground">Try “python”, “javascript” or “debugging”.</p>
+              <p className="mt-3 text-muted-foreground">
+                Try “python”, “javascript” or “debugging”.
+              </p>
             </div>
           )}
           {results.map((p, i) => {
             const flip = i % 2 === 1;
-            
+
             return (
               <article key={p.id} className="group grid gap-10 md:grid-cols-12 md:gap-12">
                 <Reveal
@@ -82,48 +90,74 @@ export function Work() {
                   <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]">
                     <ProjectVisual id={p.id} />
                   </div>
-                  <span className="display absolute right-5 top-3 text-7xl text-foreground/10">{p.index}</span>
+                  <span className="display absolute right-5 top-3 text-7xl text-foreground/10">
+                    {p.index}
+                  </span>
                 </Reveal>
 
-                <div className={`flex flex-col justify-center md:col-span-5 ${flip ? "md:order-1 md:col-start-1" : ""}`}>
-                  <Reveal className="label-mono text-primary">{p.index} — {p.label}</Reveal>
+                <div
+                  className={`flex flex-col justify-center md:col-span-5 ${flip ? "md:order-1 md:col-start-1" : ""}`}
+                >
+                  <Reveal className="label-mono text-primary">
+                    {p.index} — {p.label}
+                  </Reveal>
                   <Reveal as="h3" delay={80} className="display mt-4 text-5xl md:text-6xl">
                     {p.title}
                   </Reveal>
-                  <Reveal delay={160} className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                  <Reveal
+                    delay={160}
+                    className="mt-5 text-lg leading-relaxed text-muted-foreground"
+                  >
                     {p.description}
                   </Reveal>
                   <Reveal delay={220} className="mt-6 flex flex-wrap gap-2">
                     {p.tech.map((t) => (
-                      <span key={t} className="label-mono rounded border border-hairline px-2 py-1 text-muted-foreground">
+                      <span
+                        key={t}
+                        className="label-mono rounded border border-hairline px-2 py-1 text-muted-foreground"
+                      >
                         {t}
                       </span>
                     ))}
                   </Reveal>
                   <Reveal delay={280} className="mt-8 flex flex-wrap gap-3">
-                    {p.repo && <Button asChild variant="outline" className="h-auto"><a
-                      href={p.repo}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:border-foreground"
-                    >
-                      <Github className="h-4 w-4" /> View Source
-                    </a></Button>}
+                    {p.repo && (
+                      <Button asChild variant="outline" className="h-auto">
+                        <a
+                          href={p.repo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:border-foreground"
+                        >
+                          <Github className="h-4 w-4" /> View Source
+                        </a>
+                      </Button>
+                    )}
                     {p.live && (
-                      <Button asChild className="h-auto"><a
-                        href={p.live}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-primary hover:text-primary-foreground"
-                      >
-                        Launch Project <ArrowUpRight className="h-4 w-4" />
-                      </a></Button>
+                      <Button asChild className="h-auto">
+                        <a
+                          href={p.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-primary hover:text-primary-foreground"
+                        >
+                          Launch Project <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      </Button>
                     )}
                   </Reveal>
 
                   <div className="mt-8 border-t border-hairline pt-4">
-                    <p className="label-mono mb-3 text-muted-foreground">{p.repo ? "Learning project · source available" : "Learning example · no public source"}</p>
-                    <Button asChild variant="link" className="px-0"><Link to="/projects/$projectId" params={{ projectId: p.id }}>Read case study <ArrowUpRight /></Link></Button>
+                    <p className="label-mono mb-3 text-muted-foreground">
+                      {p.repo
+                        ? "Learning project · source available"
+                        : "Learning example · no public source"}
+                    </p>
+                    <Button asChild variant="link" className="px-0">
+                      <Link to="/projects/$projectId" params={{ projectId: p.id }}>
+                        Read case study <ArrowUpRight />
+                      </Link>
+                    </Button>
                   </div>
                 </div>
               </article>

@@ -252,8 +252,24 @@
   }
 }
 
-section[id] { scroll-margin-top: 88px; }
-.hero-name { font-size: 8rem; }
-@media (min-width: 768px) { .hero-name { font-size: 11rem; } }
-@media (min-width: 1280px) { .hero-name { font-size: 13rem; } }
-@media (max-width: 380px) { .hero-name { font-size: 6.5rem; } }
+section[id] {
+  scroll-margin-top: 88px;
+}
+.hero-name {
+  font-size: 8rem;
+}
+@media (min-width: 768px) {
+  .hero-name {
+    font-size: 11rem;
+  }
+}
+@media (min-width: 1280px) {
+  .hero-name {
+    font-size: 13rem;
+  }
+}
+@media (max-width: 380px) {
+  .hero-name {
+    font-size: 6.5rem;
+  }
+}

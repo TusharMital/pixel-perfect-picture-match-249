@@ -22,7 +22,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Tushar Mittal — Computer Science Undergraduate" },
       {
         property: "og:description",
-        content: "Coursework projects, AI-assisted development process and computer science interests of Tushar Mittal.",
+        content:
+          "Coursework projects, AI-assisted development process and computer science interests of Tushar Mittal.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -35,7 +36,10 @@ function Index() {
   const [chatOpen, setChatOpen] = useState(false);
   return (
     <div className="grain">
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >
         Skip to content
       </a>
       <Nav onOpenChat={() => setChatOpen(true)} />

@@ -13,7 +13,9 @@ export function ProjectVisual({ id }: { id: string }) {
             />
           </div>
         ))}
-        <span className="label-mono absolute left-8 top-6 text-muted-foreground">a, b = b, a + b</span>
+        <span className="label-mono absolute left-8 top-6 text-muted-foreground">
+          a, b = b, a + b
+        </span>
       </div>
     );
   }
@@ -28,7 +30,10 @@ export function ProjectVisual({ id }: { id: string }) {
             className={`flex items-center gap-3 rounded border px-4 py-2.5 text-sm transition-colors duration-500 ${i === 1 ? "border-border group-hover:border-signal group-hover:bg-signal/10" : "border-hairline"}`}
           >
             <span className="label-mono text-muted-foreground">{l}</span>
-            <span className="h-1.5 rounded-full bg-muted-foreground/30" style={{ width: `${40 + i * 12}%` }} />
+            <span
+              className="h-1.5 rounded-full bg-muted-foreground/30"
+              style={{ width: `${40 + i * 12}%` }}
+            />
           </div>
         ))}
       </div>
@@ -36,14 +41,22 @@ export function ProjectVisual({ id }: { id: string }) {
   }
   if (id === "debugging" || id === "cursor-debugging") {
     const cursor = id === "cursor-debugging";
-    return <div className="grid-lines flex h-full flex-col justify-center gap-6 p-6 md:p-8">
-      <p className="label-mono text-primary">{cursor ? "Running total" : "Boundary checks"}</p>
-      <p className="display text-4xl">{cursor ? "10 + 20 + 30 + 40 + 50" : "Reproduce. Correct. Verify."}</p>
-      <div className="border-t border-border pt-6">
-        <p className="display text-6xl text-primary">{cursor ? "150" : "RED → GREEN"}</p>
-        <p className="mt-4 text-sm text-muted-foreground">{cursor ? "Accumulate values, don’t overwrite the total." : "Average · pass boundary · grade ordering"}</p>
+    return (
+      <div className="grid-lines flex h-full flex-col justify-center gap-6 p-6 md:p-8">
+        <p className="label-mono text-primary">{cursor ? "Running total" : "Boundary checks"}</p>
+        <p className="display text-4xl">
+          {cursor ? "10 + 20 + 30 + 40 + 50" : "Reproduce. Correct. Verify."}
+        </p>
+        <div className="border-t border-border pt-6">
+          <p className="display text-6xl text-primary">{cursor ? "150" : "RED → GREEN"}</p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            {cursor
+              ? "Accumulate values, don’t overwrite the total."
+              : "Average · pass boundary · grade ordering"}
+          </p>
+        </div>
       </div>
-    </div>;
+    );
   }
   const books = [
     { h: 78, s: "Finished" },

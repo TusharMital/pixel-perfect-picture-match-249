@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { ArrowUp, RotateCcw, Terminal, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowUp, RotateCcw, MessageSquare, X } from "lucide-react";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -14,7 +15,13 @@ const SUGGESTIONS = [
 function linkify(text: string): ReactNode[] {
   return text.split(/(https?:\/\/[^\s)]+[^\s).,;:!?])/g).map((part, i) =>
     /^https?:\/\//.test(part) ? (
-      <a key={i} href={part} target="_blank" rel="noreferrer" className="break-all text-primary underline underline-offset-2">
+      <a
+        key={i}
+        href={part}
+        target="_blank"
+        rel="noreferrer"
+        className="break-all text-primary underline underline-offset-2"
+      >
         {part.replace(/^https?:\/\/(www\.)?/, "")}
       </a>
     ) : (
@@ -23,10 +30,17 @@ function linkify(text: string): ReactNode[] {
   );
 }
 
-export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+export function ChatAssistant({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [retryable, setRetryable] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -37,14 +51,20 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
   }, [messages, loading, error]);
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 50);
+    const previous = document.activeElement;
+    const timer = open ? setTimeout(() => inputRef.current?.focus(), 50) : undefined;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onOpenChange(false);
     if (open) window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (timer) clearTimeout(timer);
+      if (open && previous instanceof HTMLElement) previous.focus();
+    };
   }, [open, onOpenChange]);
 
   const send = async (history: Msg[]) => {
     setError(null);
+    setRetryable(false);
     setLoading(true);
     const ctrl = new AbortController();
     abortRef.current = ctrl;
@@ -52,11 +72,12 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history.filter((m) => m.content.trim()).slice(-23) }),
         signal: ctrl.signal,
       });
       if (!res.ok || !res.body) {
         const data = await res.json().catch(() => ({}));
+        setRetryable((res.status === 429 || res.status >= 500) && data.code !== "unconfigured");
         throw new Error(data.error || "Something went wrong. Please try again.");
       }
       const reader = res.body.getReader();
@@ -72,8 +93,11 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
       if (!text.trim()) throw new Error("The assistant returned an empty reply. Please try again.");
     } catch (e) {
       if ((e as Error).name === "AbortError") return;
+      if (e instanceof TypeError) setRetryable(true);
       setMessages(history);
-      setError(e instanceof TypeError ? "Network error — check your connection." : (e as Error).message);
+      setError(
+        e instanceof TypeError ? "Network error — check your connection." : (e as Error).message,
+      );
     } finally {
       setLoading(false);
       abortRef.current = null;
@@ -95,14 +119,15 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
 
   return (
     <>
-      <button
+      <Button
+        variant="ghost"
         onClick={() => onOpenChange(!open)}
         aria-label={open ? "Close portfolio assistant" : "Open Ask Tushar’s Portfolio"}
         className="group fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full bg-foreground py-3 pl-4 pr-5 text-background shadow-2xl transition-all hover:bg-primary hover:text-primary-foreground md:bottom-8 md:right-8"
       >
-        {open ? <X className="h-4 w-4" /> : <Terminal className="h-4 w-4" />}
+        {open ? <X className="h-4 w-4" /> : <MessageSquare className="h-4 w-4" />}
         <span className="label-mono">{open ? "Close" : "Ask my portfolio"}</span>
-      </button>
+      </Button>
 
       {open && (
         <div
@@ -118,11 +143,12 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
               </span>
               <div>
                 <div className="text-sm font-semibold">Ask Tushar’s Portfolio</div>
-                <div className="label-mono text-[10px] text-muted-foreground">Lovable AI · answers from portfolio facts</div>
+                <div className="label-mono text-[10px] text-muted-foreground">Lovable AI</div>
               </div>
             </div>
             {messages.length > 0 && (
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => {
                   abortRef.current?.abort();
                   setMessages([]);
@@ -132,30 +158,38 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
                 className="grid h-8 w-8 place-items-center rounded hover:bg-secondary"
               >
                 <RotateCcw className="h-4 w-4" />
-              </button>
+              </Button>
             )}
           </div>
 
-          <div ref={scrollRef} className="flex-1 space-y-5 overflow-y-auto px-5 py-5" aria-live="polite">
+          <div
+            ref={scrollRef}
+            className="flex-1 space-y-5 overflow-y-auto px-5 py-5"
+            aria-live="polite"
+          >
             {messages.length === 0 && (
               <div>
                 <p className="display text-3xl">Hi — ask me anything about Tushar’s work.</p>
                 <div className="mt-6 flex flex-col gap-2">
                   {SUGGESTIONS.map((s) => (
-                    <button
+                    <Button
+                      variant="ghost"
                       key={s}
                       onClick={() => submit(s)}
                       className="rounded border border-hairline px-3 py-2.5 text-left text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
                     >
                       {s}
-                    </button>
+                    </Button>
                   ))}
                 </div>
               </div>
             )}
             {messages.map((m, i) =>
               m.role === "user" ? (
-                <div key={i} className="ml-auto max-w-[85%] rounded-lg bg-primary px-4 py-2.5 text-sm text-primary-foreground">
+                <div
+                  key={i}
+                  className="ml-auto max-w-[85%] rounded-lg bg-primary px-4 py-2.5 text-sm text-primary-foreground"
+                >
                   {m.content}
                 </div>
               ) : (
@@ -164,20 +198,26 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
                 </div>
               ),
             )}
-            {loading && messages.at(-1)?.role === "user" && (
+            {loading && (
               <div className="label-mono flex items-center gap-2 text-muted-foreground">
                 <span className="caret text-primary">▍</span> thinking
               </div>
             )}
             {error && (
-              <div className="rounded border border-destructive/40 bg-destructive/10 p-3 text-sm">
+              <div
+                role="alert"
+                className="rounded border border-destructive/40 bg-destructive/10 p-3 text-sm"
+              >
                 <p>{error}</p>
-                <button
-                  onClick={() => send(messages)}
-                  className="label-mono mt-2 flex items-center gap-1.5 text-destructive hover:underline"
-                >
-                  <RotateCcw className="h-3 w-3" /> Retry
-                </button>
+                {retryable && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => send(messages)}
+                    className="label-mono mt-2 flex items-center gap-1.5 text-destructive hover:underline"
+                  >
+                    <RotateCcw className="h-3 w-3" /> Retry
+                  </Button>
+                )}
               </div>
             )}
           </div>
@@ -206,16 +246,17 @@ export function ChatAssistant({ open, onOpenChange }: { open: boolean; onOpenCha
                 }
               }}
               placeholder="Ask about projects, skills…"
-              className="max-h-32 min-h-[44px] flex-1 resize-none rounded border border-input bg-transparent px-3 py-2.5 text-sm outline-none focus:border-primary"
+              className="max-h-32 min-h-[44px] min-w-0 flex-1 resize-none rounded border border-input bg-transparent px-3 py-2.5 text-sm outline-none focus:border-primary"
             />
-            <button
+            <Button
+              variant="ghost"
               type="submit"
               disabled={loading || !input.trim()}
               aria-label="Send message"
               className="grid h-11 w-11 shrink-0 place-items-center rounded bg-primary text-primary-foreground transition-opacity disabled:opacity-40"
             >
               <ArrowUp className="h-4 w-4" />
-            </button>
+            </Button>
           </form>
         </div>
       )}

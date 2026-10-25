@@ -33,17 +33,26 @@ export function Process() {
             From prompt to <em className="text-primary">working</em> software.
           </Reveal>
           <Reveal delay={120} className="text-muted-foreground md:col-span-4 md:self-end">
-            The practical workflow I use in my Prompt Engineering coursework — a habit, not a formal methodology every
-            project follows identically.
+            The practical workflow I use in my Prompt Engineering coursework — a habit, not a formal
+            methodology every project follows identically.
           </Reveal>
         </div>
 
         <div ref={ref} className="relative mt-20">
           <div aria-hidden className="absolute left-[11px] top-0 h-full w-px bg-border md:hidden">
-            <div className="h-full w-full origin-top bg-primary" style={{ transform: `scaleY(${progress})` }} />
+            <div
+              className="h-full w-full origin-top bg-primary"
+              style={{ transform: `scaleY(${progress})` }}
+            />
           </div>
-          <div aria-hidden className="absolute left-0 top-[11px] hidden h-px w-full bg-border md:block">
-            <div className="h-full w-full origin-left bg-primary" style={{ transform: `scaleX(${progress})` }} />
+          <div
+            aria-hidden
+            className="absolute left-0 top-[11px] hidden h-px w-full bg-border md:block"
+          >
+            <div
+              className="h-full w-full origin-left bg-primary"
+              style={{ transform: `scaleX(${progress})` }}
+            />
           </div>
           <ol className="relative grid gap-10 md:grid-cols-5 md:gap-6">
             {PROCESS.map((s, i) => {
@@ -53,10 +62,16 @@ export function Process() {
                   <span
                     className={`absolute left-0 top-0 grid h-[23px] w-[23px] place-items-center rounded-full border transition-all duration-500 ${on ? "border-primary bg-primary" : "border-border bg-card"}`}
                   >
-                    <span className={`h-1.5 w-1.5 rounded-full ${on ? "bg-primary-foreground" : "bg-muted-foreground/50"}`} />
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${on ? "bg-primary-foreground" : "bg-muted-foreground/50"}`}
+                    />
                   </span>
-                  <div className={`transition-all duration-700 ${on ? "opacity-100" : "opacity-100"}`}>
-                    <div className="label-mono text-muted-foreground">Step {String(i + 1).padStart(2, "0")}</div>
+                  <div
+                    className={`transition-all duration-700 ${on ? "opacity-100" : "opacity-100"}`}
+                  >
+                    <div className="label-mono text-muted-foreground">
+                      Step {String(i + 1).padStart(2, "0")}
+                    </div>
                     <h3 className="display mt-2 text-3xl md:text-4xl">{s.k}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
                     <p className="mt-4 text-sm leading-relaxed">{s.example}</p>
