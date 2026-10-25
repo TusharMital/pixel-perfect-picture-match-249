@@ -31,8 +31,8 @@ export function Contact() {
         </Reveal>
         <div className="mt-14 grid gap-10 md:grid-cols-12">
           <Reveal className="text-lg leading-relaxed text-muted-foreground md:col-span-5">
-            I’m exploring the intersection of computer science fundamentals, thoughtful prompting, and practical software
-            development. Let’s connect.
+            I’m exploring the intersection of computer science fundamentals, thoughtful prompting,
+            and practical software development. Let’s connect.
           </Reveal>
           <div className="md:col-span-6 md:col-start-7">
             <Reveal className="flex flex-wrap items-center gap-3">
@@ -42,7 +42,9 @@ export function Contact() {
               >
                 {LINKS.email}
               </a>
-              <Button variant="ghost" size="icon"
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={copy}
                 aria-label="Copy email address"
                 className="grid h-10 w-10 place-items-center rounded-full border border-border hover:border-foreground"
@@ -50,7 +52,9 @@ export function Contact() {
                 {copied ? <Check className="h-4 w-4 text-signal" /> : <Copy className="h-4 w-4" />}
               </Button>
             </Reveal>
-            <p role="status" className="mt-2 text-sm text-muted-foreground">{copied ? "Email copied." : copyError ? "Copy unavailable — use the email link." : ""}</p>
+            <p role="status" className="mt-2 text-sm text-muted-foreground">
+              {copied ? "Email copied." : copyError ? "Copy unavailable — use the email link." : ""}
+            </p>
             <Reveal delay={100} className="mt-10 grid border-t border-border">
               {[
                 ["GitHub", LINKS.github, "github.com/TusharMital"],
@@ -78,12 +82,29 @@ export function Contact() {
         <div className="label-mono mx-auto flex max-w-[1400px] flex-col gap-3 px-5 py-8 text-muted-foreground md:flex-row md:items-center md:justify-between md:px-10">
           <span>© {new Date().getFullYear()} Tushar Mittal</span>
           <span className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-signal" /> compiled with curiosity · JECRC University
+            <span className="h-1.5 w-1.5 rounded-full bg-signal" /> compiled with curiosity · JECRC
+            University
           </span>
           <span className="flex gap-5">
-            <a href={LINKS.github} target="_blank" rel="noreferrer" className="hover:text-foreground">GitHub</a>
-            <a href={LINKS.linkedin} target="_blank" rel="noreferrer" className="hover:text-foreground">LinkedIn</a>
-            <a href={`mailto:${LINKS.email}`} className="hover:text-foreground">Email</a>
+            <a
+              href={LINKS.github}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              GitHub
+            </a>
+            <a
+              href={LINKS.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-foreground"
+            >
+              LinkedIn
+            </a>
+            <a href={`mailto:${LINKS.email}`} className="hover:text-foreground">
+              Email
+            </a>
           </span>
         </div>
       </footer>

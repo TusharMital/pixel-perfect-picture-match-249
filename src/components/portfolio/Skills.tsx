@@ -46,18 +46,26 @@ export function Milestones() {
               Building the foundations.
             </Reveal>
             <Reveal delay={100} className="mt-5 text-muted-foreground">
-              Programming, systems and emerging technologies — subjects I am studying, not claims of mastery.
+              Programming, systems and emerging technologies — subjects I am studying, not claims of
+              mastery.
             </Reveal>
           </div>
         </div>
         <ol className="md:col-span-8">
           {MILESTONES.map((m, i) => (
-            <Reveal as="li" key={m.t} delay={i * 60} className="group grid grid-cols-[48px_1fr] gap-4 border-t border-border py-8 md:grid-cols-[80px_1fr]">
-              <span className={`label-mono pt-2 ${m.future ? "text-signal" : "text-muted-foreground"}`}>
-                {m.future ? "NEXT" : String(i + 1).padStart(2, "0")}
+            <Reveal
+              as="li"
+              key={m.t}
+              delay={i * 60}
+              className="group grid grid-cols-[48px_1fr] gap-4 border-t border-border py-8 md:grid-cols-[80px_1fr]"
+            >
+              <span className="label-mono pt-2 text-muted-foreground">
+                {String(i + 1).padStart(2, "0")}
               </span>
               <div>
-                <h3 className="display text-3xl transition-colors group-hover:text-primary md:text-4xl">{m.t}</h3>
+                <h3 className="display text-3xl transition-colors group-hover:text-primary md:text-4xl">
+                  {m.t}
+                </h3>
                 <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">{m.d}</p>
               </div>
             </Reveal>
@@ -68,7 +76,17 @@ export function Milestones() {
         <p className="label-mono text-primary">Education & Certification</p>
         <h3 className="display mt-6 max-w-4xl text-4xl md:text-5xl">{COURSE.title}</h3>
         <dl className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[["Duration", `${COURSE.hours} hours`], ["Funding", COURSE.funding], ["Host", COURSE.host], ["Reported rating", COURSE.rating]].map(([label, value]) => <div key={label}><dt className="label-mono text-muted-foreground">{label}</dt><dd className="mt-2 leading-relaxed">{value}</dd></div>)}
+          {[
+            ["Duration", `${COURSE.hours} hours`],
+            ["Funding", COURSE.funding],
+            ["Host", COURSE.host],
+            ["Reported rating", COURSE.rating],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <dt className="label-mono text-muted-foreground">{label}</dt>
+              <dd className="mt-2 leading-relaxed">{value}</dd>
+            </div>
+          ))}
         </dl>
       </div>
     </section>

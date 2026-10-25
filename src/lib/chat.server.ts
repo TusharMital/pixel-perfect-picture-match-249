@@ -20,7 +20,10 @@ const RUN_ID = "X-Lovable-AIG-Run-ID";
 export async function handleChat(request: Request): Promise<Response> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) {
-    return Response.json({ error: "The assistant is not configured yet.", code: "unconfigured" }, { status: 503 });
+    return Response.json(
+      { error: "The assistant is not configured yet.", code: "unconfigured" },
+      { status: 503 },
+    );
   }
 
   let parsed;
@@ -30,7 +33,10 @@ export async function handleChat(request: Request): Promise<Response> {
     return Response.json({ error: "Invalid request." }, { status: 400 });
   }
   if (!parsed.success || parsed.data.messages.at(-1)?.role !== "user") {
-    return Response.json({ error: "Please send a message under 2000 characters." }, { status: 400 });
+    return Response.json(
+      { error: "Please send a message under 2000 characters." },
+      { status: 400 },
+    );
   }
   // strip control chars
   const messages = parsed.data.messages.map((m) => ({
@@ -56,6 +62,7 @@ export async function handleChat(request: Request): Promise<Response> {
     model: provider.responses("openai/gpt-6-astra"),
     system: buildAssistantKnowledge(),
     messages,
+    maxRetries: 0,
     abortSignal: request.signal,
     providerOptions: {
       openai: {
@@ -75,13 +82,24 @@ export async function handleChat(request: Request): Promise<Response> {
     first = await iterator.next();
   } catch (err) {
     const status = (err as { statusCode?: number }).statusCode ?? 502;
+    const upstream = err as { responseBody?: string };
+    let safeMessage: string | undefined;
+    try {
+      const data = JSON.parse(upstream.responseBody ?? "{}");
+      safeMessage = data.error?.message ?? data.message;
+    } catch {
+      /* Only expose a structured upstream message. */
+    }
     const message =
-      status === 429
+      safeMessage ??
+      (status === 429
         ? "The assistant is busy right now. Please try again in a moment."
         : status === 402
           ? "The assistant has run out of AI credits for now."
-          : "The assistant couldn't respond. Please try again.";
-    console.error("chat error", status, err);
+          : status === 403
+            ? "Access to the assistant is currently denied."
+            : "The assistant couldn't respond. Please try again.");
+    console.error("chat error status", status);
     return Response.json({ error: message }, { status });
   }
 
@@ -105,7 +123,10 @@ export async function handleChat(request: Request): Promise<Response> {
     },
   });
 
-  const headers = new Headers({ "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-store" });
+  const headers = new Headers({
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "no-store",
+  });
   if (runId) headers.set(RUN_ID, runId);
   return new Response(body, { headers });
 }

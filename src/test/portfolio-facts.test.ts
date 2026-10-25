@@ -7,16 +7,26 @@ describe("verified portfolio constraints", () => {
     expect(DEBUGGING_EXAMPLE.total).toBe(150);
   });
   it("does not invent Cursor project links", () => {
-    const project = PROJECTS.find(p => p.id === "cursor-debugging");
+    const project = PROJECTS.find((p) => p.id === "cursor-debugging");
     expect(project).toBeDefined();
     expect(project?.repo).toBeUndefined();
     expect(project?.live).toBeUndefined();
   });
   it("preserves the forty-hour course details", () => {
-    expect(COURSE).toEqual({ title: "QT-00 & 01 Foundations of Quantum Computing & Applications", hours: 40, funding: "MeitY-funded", host: "Consortium of EICT Academy, MNIT Jaipur", rating: "Excellent" });
+    expect(COURSE).toEqual({
+      title: "QT-00 & 01 Foundations of Quantum Computing & Applications",
+      hours: 40,
+      funding: "MeitY-funded",
+      host: "Consortium of EICT Academy, MNIT Jaipur",
+      rating: "Excellent",
+    });
   });
   it("keeps both supplied demo destinations", () => {
-    expect(PROJECTS.find(p => p.id === "quiz-app")?.live).toBe("https://interactive-quiz-app-rosy.vercel.app/");
-    expect(PROJECTS.find(p => p.id === "reading-list")?.live).toBe("https://reading-list-app-one.vercel.app/");
+    expect(PROJECTS.find((p) => p.id === "quiz-app")?.live).toBe(
+      "https://interactive-quiz-app-rosy.vercel.app/",
+    );
+    expect(PROJECTS.find((p) => p.id === "reading-list")?.live).toBe(
+      "https://reading-list-app-one.vercel.app/",
+    );
   });
 });

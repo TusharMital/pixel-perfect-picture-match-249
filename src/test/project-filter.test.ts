@@ -5,6 +5,12 @@ import { filterProjects } from "@/lib/project-filter";
 const ids = (r: { id: string }[]) => r.map((p) => p.id);
 
 describe("project search & filter", () => {
+  it("includes the fifth project in debugging searches", () => {
+    expect(ids(filterProjects(PROJECTS, "cursor", "Debugging"))).toEqual(["cursor-debugging"]);
+  });
+  it("searches verified React technology", () => {
+    expect(ids(filterProjects(PROJECTS, "react", null))).toEqual(["reading-list"]);
+  });
   it("searches by project name", () => {
     expect(ids(filterProjects(PROJECTS, "reading list", null))).toEqual(["reading-list"]);
   });
@@ -15,7 +21,10 @@ describe("project search & filter", () => {
     expect(ids(filterProjects(PROJECTS, "fibonacci", null))).toEqual(["python-programs"]);
   });
   it("filters by category", () => {
-    expect(ids(filterProjects(PROJECTS, "", "Web Development"))).toEqual(["quiz-app", "reading-list"]);
+    expect(ids(filterProjects(PROJECTS, "", "Web Development"))).toEqual([
+      "quiz-app",
+      "reading-list",
+    ]);
   });
   it("combines search and category", () => {
     expect(ids(filterProjects(PROJECTS, "python", "Debugging"))).toEqual(["debugging"]);

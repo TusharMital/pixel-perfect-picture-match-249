@@ -5,18 +5,45 @@ export const LINKS = {
 };
 
 export const PROFILE = {
-  intro: "I’m a Computer Science undergraduate exploring programming, systems, networking, AI-assisted development and emerging technologies — learning how software works beneath the surface.",
-  study: "I study C, C++, Python, data structures and algorithms, operating systems, computer architecture, Linux and Ubuntu through WSL2, networking and quantum computing.",
-  coursework: "My Prompt Engineering coursework explores how AI tools can help write programs, investigate errors, test behaviour, document and deploy software.",
-  approach: "I treat AI as a development aid — not a substitute for understanding. Evaluate, inspect, test, iterate.",
+  intro:
+    "I’m a Computer Science undergraduate exploring programming, systems, networking, AI-assisted development and emerging technologies — learning how software works beneath the surface.",
+  study:
+    "I study C, C++, Python, data structures and algorithms, operating systems, computer architecture, Linux and Ubuntu through WSL2, networking and quantum computing.",
+  coursework:
+    "My Prompt Engineering coursework explores how AI tools can help write programs, investigate errors, test behaviour, document and deploy software.",
+  approach:
+    "I treat AI as a development aid — not a substitute for understanding. Evaluate, inspect, test, iterate.",
 };
-export const INTERESTS = ["Programming fundamentals & debugging", "Operating systems & computer architecture", "Linux, networking & protocols", "Data structures & algorithms", "Quantum computing"];
-export const COURSEWORK = ["Prompt design & refinement", "AI-assisted coding", "Debugging & testing", "Code review & documentation", "Building & deploying web apps"];
-export const COURSE = { title: "QT-00 & 01 Foundations of Quantum Computing & Applications", hours: 40, funding: "MeitY-funded", host: "Consortium of EICT Academy, MNIT Jaipur", rating: "Excellent" };
+export const INTERESTS = [
+  "Programming fundamentals & debugging",
+  "Operating systems & computer architecture",
+  "Linux, networking & protocols",
+  "Data structures & algorithms",
+  "Quantum computing",
+];
+export const COURSEWORK = [
+  "Prompt design & refinement",
+  "AI-assisted coding",
+  "Debugging & testing",
+  "Code review & documentation",
+  "Building & deploying web apps",
+];
+export const COURSE = {
+  title: "QT-00 & 01 Foundations of Quantum Computing & Applications",
+  hours: 40,
+  funding: "MeitY-funded",
+  host: "Consortium of EICT Academy, MNIT Jaipur",
+  rating: "Excellent",
+};
 export const DEBUGGING_EXAMPLE = { values: [10, 20, 30, 40, 50], total: 150 };
 
 export type Category = "Python" | "Web Development" | "Debugging" | "Prompt Engineering";
-export const CATEGORIES: Category[] = ["Python", "Web Development", "Debugging", "Prompt Engineering"];
+export const CATEGORIES: Category[] = [
+  "Python",
+  "Web Development",
+  "Debugging",
+  "Prompt Engineering",
+];
 
 export type Project = {
   id: string;
@@ -65,7 +92,8 @@ export const PROJECTS: Project[] = [
       objective: "Build a small, complete browser quiz and practise interaction state.",
       implementation:
         "Vanilla JavaScript with no build step: one question at a time, score and progress tracking, answer feedback, a lock against re-answering, light/dark themes and restart.",
-      outcome: "Five questions, answer feedback, a completion score and restart demonstrate a complete quiz flow. Learning focus: tracking state and preventing repeat answers.",
+      outcome:
+        "Five questions, answer feedback, a completion score and restart demonstrate a complete quiz flow. Learning focus: tracking state and preventing repeat answers.",
     },
   },
   {
@@ -82,7 +110,8 @@ export const PROJECTS: Project[] = [
       objective: "Understand why tests fail before changing any code.",
       implementation:
         "The assignment README describes three issues: an average dividing by len(marks) − 1, a pass mark of exactly 40 failing the boundary check, and grade conditions ordered so 95 became “First” instead of “Distinction”.",
-      outcome: "The current source contains corrected average, passing-mark and grade-order logic, alongside unittest tests and recorded RED/GREEN outputs. Learning focus: reproduce a failure, inspect the cause and rerun the same tests.",
+      outcome:
+        "The current source contains corrected average, passing-mark and grade-order logic, alongside unittest tests and recorded RED/GREEN outputs. Learning focus: reproduce a failure, inspect the cause and rerun the same tests.",
     },
   },
   {
@@ -105,13 +134,21 @@ export const PROJECTS: Project[] = [
     },
   },
   {
-    id: "cursor-debugging", index: "03", title: "Bug Fixing Using Cursor AI", label: "AI-ASSISTED DEBUGGING",
-    description: "A learning example exploring AI-assisted code correction: replacing an assignment that overwrites a running total with addition. Values 10, 20, 30, 40, 50 should total 150.",
-    tech: ["Cursor AI"], categories: ["Debugging", "Prompt Engineering"],
+    id: "cursor-debugging",
+    index: "03",
+    title: "Bug Fixing Using Cursor AI",
+    label: "AI-ASSISTED DEBUGGING",
+    description:
+      "A learning example exploring AI-assisted code correction: replacing an assignment that overwrites a running total with addition. Values 10, 20, 30, 40, 50 should total 150.",
+    tech: ["Cursor AI"],
+    categories: ["Debugging", "Prompt Engineering"],
     caseStudy: {
-      objective: "Understand why an accumulator loses earlier values, and evaluate an AI-assisted correction.",
-      implementation: "Assigning each array element to the running total overwrites the accumulated sum. Add each value to the total instead, then check the input 10, 20, 30, 40, 50.",
-      outcome: "The expected total is 150. The lesson is to check an AI suggestion against a concrete example; no repository, demo, programming language or development history is claimed for this example.",
+      objective:
+        "Understand why an accumulator loses earlier values, and evaluate an AI-assisted correction.",
+      implementation:
+        "Assigning each array element to the running total overwrites the accumulated sum. Add each value to the total instead, then check the input 10, 20, 30, 40, 50.",
+      outcome:
+        "The expected total is 150. The lesson is to check an AI suggestion against a concrete example; no repository, demo, programming language or development history is claimed for this example.",
     },
   },
 ];
@@ -119,29 +156,71 @@ export const PROJECTS: Project[] = [
 PROJECTS.sort((a, b) => a.index.localeCompare(b.index));
 
 export const PROCESS = [
-  { k: "Understand", d: "Clarify the problem, user intent and expected outcome.", example: "Example: a running total loses previously added values." },
-  { k: "Define", d: "Specify requirements, constraints, context and success criteria.", example: "Require 10, 20, 30, 40, 50 to produce 150 without discarding earlier values." },
-  { k: "Prompt", d: "Write clear instructions and provide relevant examples.", example: "Ask the AI to explain assignment versus accumulation and propose a minimal correction." },
-  { k: "Inspect and Test", d: "Evaluate the output against the requirements.", example: "Read the change, run the five-value example, and check an empty input and a single value." },
-  { k: "Refine and Document", d: "Correct shortcomings and record the final result.", example: "Revise any failed case and document why addition preserves the running total. AI output is not guaranteed correct." },
+  {
+    k: "Understand",
+    d: "Clarify the problem, user intent and expected outcome.",
+    example: "Example: a running total loses previously added values.",
+  },
+  {
+    k: "Define",
+    d: "Specify requirements, constraints, context and success criteria.",
+    example: "Require 10, 20, 30, 40, 50 to produce 150 without discarding earlier values.",
+  },
+  {
+    k: "Prompt",
+    d: "Write clear instructions and provide relevant examples.",
+    example:
+      "Ask the AI to explain assignment versus accumulation and propose a minimal correction.",
+  },
+  {
+    k: "Inspect and Test",
+    d: "Evaluate the output against the requirements.",
+    example:
+      "Read the change, run the five-value example, and check an empty input and a single value.",
+  },
+  {
+    k: "Refine and Document",
+    d: "Correct shortcomings and record the final result.",
+    example:
+      "Revise any failed case and document why addition preserves the running total. AI output is not guaranteed correct.",
+  },
 ];
 
 export const SKILLS: { group: string; items: string[] }[] = [
   { group: "Programming", items: ["C", "C++", "Python"] },
   {
     group: "CS Fundamentals",
-    items: ["Data Structures & Algorithms", "Operating Systems", "Computer Architecture", "Computer Networking"],
+    items: [
+      "Data Structures & Algorithms",
+      "Operating Systems",
+      "Computer Architecture",
+      "Computer Networking",
+    ],
   },
   {
     group: "Tools & Development",
-    items: ["Git & GitHub", "VS Code", "Linux / Ubuntu on WSL2", "React", "TypeScript", "Vite", "AI-assisted development tools"],
+    items: [
+      "Git & GitHub",
+      "VS Code",
+      "Linux / Ubuntu on WSL2",
+      "React",
+      "TypeScript",
+      "Vite",
+      "AI-assisted development tools",
+    ],
   },
   { group: "Exploration", items: ["Prompt Engineering", "Quantum Computing"] },
 ];
 
 export const MILESTONES = [
-  { t: "Programming fundamentals", d: "Practising C, C++ and Python, with attention to loops, data structures and how programs execute." },
-  { t: "Python debugging & code quality", d: "Inspecting errors, checking boundary cases and using tests to evaluate corrections." },
+  {
+    t: "Programming fundamentals",
+    d: "Practising C, C++ and Python, with attention to loops, data structures and how programs execute.",
+  },
+  {
+    t: "Python debugging & code quality",
+    d: "Inspecting errors, checking boundary cases and using tests to evaluate corrections.",
+  },
   {
     t: "DSA Practice",
     d: "Studying data structures and algorithms and practising problem-solving.",
@@ -162,7 +241,10 @@ export const MILESTONES = [
     t: "Linux & WSL2",
     d: "Exploring Linux and Ubuntu through WSL2 alongside operating systems concepts.",
   },
-  { t: "Prompt Engineering & AI-assisted development", d: "Clarifying requirements, inspecting generated code, testing behaviour and documenting corrections." },
+  {
+    t: "Prompt Engineering & AI-assisted development",
+    d: "Clarifying requirements, inspecting generated code, testing behaviour and documenting corrections.",
+  },
 ];
 
 /** Knowledge given to the AI assistant. Only verified facts. */
