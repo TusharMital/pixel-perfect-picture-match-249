@@ -67,7 +67,7 @@ export function Hero() {
             </a>
             <a href={LINKS.linkedin} target="_blank" rel="noreferrer" className="label-mono link-underline flex items-center gap-2 text-muted-foreground hover:text-foreground">
               <Linkedin className="h-3.5 w-3.5" /> LinkedIn
-            </a></Button>
+            </a>
           </div>
           <a href="#about" className="label-mono flex items-center gap-3 text-muted-foreground" aria-label="Scroll to About">
             Scroll

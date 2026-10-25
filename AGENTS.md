@@ -13,3 +13,6 @@
 - Portfolio content (projects, skills, milestones, links) lives only in `src/lib/portfolio-data.ts`; UI and the AI assistant's knowledge both read from it so facts never drift.
 - The assistant calls Lovable AI only from the server route `src/routes/api/chat.ts` (`src/lib/chat.server.ts`); the key never reaches the browser.
 - Theme: dark is default on `:root`; light mode is the `.light` class on `<html>`.
+
+- Case studies use the dynamic `/projects/$projectId` route and shared project data so refresh and browser history preserve the selected study.
+- The home page intentionally remains a long scrolling portfolio; navigation hashes point to its named sections.
